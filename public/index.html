@@ -2,68 +2,55 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Welcome to Firebase Hosting</title>
-    <style media="screen">
-      body {
-        font-family: Roboto, Arial, sans-serif;
-        background: #ECEFF1;
-        color: rgba(0,0,0,0.87);
-      }
-
-      a {
-        color: rgb(3,155,229);
-      }
-
-      #message {
-        max-width: 400px;
-        margin: 40px auto;
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2),0 1px 1px 0 rgba(0,0,0,0.14),0 2px 1px -1px rgba(0,0,0,0.12);
-        border-radius: 2px;
-        background: white;
-        padding: 16px 24px;
-      }
-
-      #message h1 {
-        font-size: 22px;
-        font-weight: 500;
-        text-align: center;
-        margin: 0 0 16px;
-      }
-
-      #message p {
-        font-weight: 300;
-        line-height: 150%;
-      }
-
-      #message ul {
-        list-style: none;
-        margin: 16px 0 0;
-        padding: 0;
-        text-align: center;
-      }
-
-      #message li a {
-        display: inline-block;
-        padding: 8px;
-        text-transform: uppercase;
-        text-decoration: none;
-        font-weight: 500;
-        background: rgb(3,155,229);
-        color: white;
-        border: 1px solid rgb(3,155,229);
-        border-radius: 3px;
-        font-size: 14px;
-        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-      }
-    </style>
+    <title>AMU QnA</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@0.7.1"></script>
   </head>
   <body>
-    <div id="message">
-      <h1>Welcome to Firebase Hosting</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <ul>
-        <li><a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a></li>
-      </ul>
+    <div id="app">
+        <md-whiteframe>
+            <md-toolbar>
+                <h1 class="md-title">AMU QnA Survey</h1>
+            </md-toolbar>
+        </md-whiteframe>
+
+        <md-layout md-gutter>
+          <md-layout md-flex="20" md-flex-small="10"></md-layout>
+          <md-layout md-flex="60" md-flex-small="80">
+              <md-card style="margin:16px;">
+                  <md-card-header>
+                      <div class="md-title">AMU AI Bot</div>
+                      <div class="md-subhead">AI bot to solve student queries</div>
+                  </md-card-header>
+
+                  <md-card-content>
+                      {{ message }}
+                      <br><br>Fun Stuff <img style="height: 50px; padding: 5px;" src="http://emojipedia-us.s3.amazonaws.com/cache/0d/4a/0d4a6907a21382c60c80bf93c293926e.png"></img><br>ZHCET Students
+                  </md-card-content>
+                </md-card>
+          </md-layout>
+        </md-layout>
     </div>
+    <script type="text/javascript">
+        Vue.use(VueMaterial);
+
+        Vue.material.registerTheme('default', {
+          primary: 'deep-orange',
+          accent: 'purple',
+          warn: 'teal',
+          background: 'white'
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.'
+            }
+        });
+    </script>
   </body>
 </html>
