@@ -35,8 +35,19 @@
                       <br><br>Fun Stuff <img style="height: 50px; padding: 5px;" src="https://emojipedia-us.s3.amazonaws.com/cache/0d/4a/0d4a6907a21382c60c80bf93c293926e.png"></img><br>ZHCET Students
                   </md-card-content>
                 </md-card>
+                <form id="form" v-on:submit.prevent="addQuery">
+                    <input type="text" v-model="newQuery.q" placeholder="Query">
+                    <input type="text" v-model="newQuery.a" placeholder="Answer">
+                    <input type="submit" value="Add User">
+                </form>
           </md-layout>
         </md-layout>
+
+        <md-dialog-alert
+          :md-content="alert.content"
+          :md-ok-text="alert.ok"
+          ref="dialog-alert">
+        </md-dialog-alert>
     </div>
     <script type="text/javascript">
         var firebaseApp = firebase.initializeApp({
@@ -47,10 +58,12 @@
             storageBucket: "amu-qna.appspot.com",
             messagingSenderId: "23417801238"
           });
-        var db = firebaseApp.database()
+        var db = firebaseApp.database();
 
         Vue.use(VueMaterial);
         Vue.use(VueFire);
+
+        var queriesRef = db.ref('queries');
 
         Vue.material.registerTheme('default', {
           primary: 'deep-orange',
@@ -62,7 +75,36 @@
         new Vue({
             el: '#app',
             data: {
-                message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.'
+                message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.',
+                newQuery : {
+                    q: '',
+                    a: ''
+                },
+                alert: {
+                    content: 'Your query has been added!',
+                    ok: 'Cool!'
+                }
+            },
+            methods: {
+                openDialog(ref) {
+                    this.$refs[ref].open();
+                },
+                addQuery() {
+                    const _vue = this;
+
+                    queriesRef.push(this.newQuery, function(error) {
+                        _vue.alert.content = 'Your query has been added!';
+                        _vue.alert.ok = 'Cool!';
+
+                        if(error) {
+                            _vue.alert.content = 'Error adding query. Service may be down!';
+                            _vue.alert.ok = 'Dang!'; 
+                        }
+                        _vue.openDialog('dialog-alert');
+                    });
+                    this.newQuery.q = '';
+                    this.newQuery.a = '';
+                }
             },
             firebase: function() {
                 return {
