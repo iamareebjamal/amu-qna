@@ -7,6 +7,7 @@
         ".validate": "newData.hasChildren(['q', 'a'])",
         "q": { ".validate": "newData.isString()" },
         "a": { ".validate": "newData.isString()" },
+        "timestamp": { ".validate": "newData.isNumber()" },
         "$others": { ".validate": "false" }
       }
     },
