@@ -1,6 +1,17 @@
 {
   "rules": {
     ".read": "true",
-    ".write": "false"
+    "queries": {
+      "$query": {
+        ".write": "true",
+        ".validate": "newData.hasChildren(['q', 'a'])",
+        "q": { ".validate": "newData.isString()" },
+        "a": { ".validate": "newData.isString()" },
+        "$others": { ".validate": "false" }
+      }
+    },
+    "$others": {
+      ".write": "false"
+    }
   }
 }
