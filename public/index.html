@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <title>AMU QnA</title>
     <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@0.7.1/dist/vue-material.css">
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vue-material@0.7.1"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
   </head>
   <body>
     <div id="app">
@@ -29,14 +32,25 @@
 
                   <md-card-content>
                       {{ message }}
-                      <br><br>Fun Stuff <img style="height: 50px; padding: 5px;" src="http://emojipedia-us.s3.amazonaws.com/cache/0d/4a/0d4a6907a21382c60c80bf93c293926e.png"></img><br>ZHCET Students
+                      <br><br>Fun Stuff <img style="height: 50px; padding: 5px;" src="https://emojipedia-us.s3.amazonaws.com/cache/0d/4a/0d4a6907a21382c60c80bf93c293926e.png"></img><br>ZHCET Students
                   </md-card-content>
                 </md-card>
           </md-layout>
         </md-layout>
     </div>
     <script type="text/javascript">
+        var firebaseApp = firebase.initializeApp({
+            apiKey: "AIzaSyDs9yK85MAqOxetbqUvbCEjUT9HNSQSGeU",
+            authDomain: "amu-qna.firebaseapp.com",
+            databaseURL: "https://amu-qna.firebaseio.com",
+            projectId: "amu-qna",
+            storageBucket: "amu-qna.appspot.com",
+            messagingSenderId: "23417801238"
+          });
+        var db = firebaseApp.database()
+
         Vue.use(VueMaterial);
+        Vue.use(VueFire);
 
         Vue.material.registerTheme('default', {
           primary: 'deep-orange',
@@ -49,6 +63,17 @@
             el: '#app',
             data: {
                 message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.'
+            },
+            firebase: function() {
+                return {
+                    messageRef: {
+                      source: db.ref('ui/message'),
+                      asObject: true,
+                      readyCallback: function () {
+                        this.message = this.messageRef['.value'];
+                      }
+                    }
+                }
             }
         });
     </script>
