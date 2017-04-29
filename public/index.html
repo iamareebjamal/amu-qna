@@ -21,13 +21,12 @@
             </md-toolbar>
         </md-whiteframe>
 
-        <md-layout md-gutter>
-          <md-layout md-flex="20" md-flex-small="10"></md-layout>
-          <md-layout md-flex="60" md-flex-small="80">
+        <md-layout md-align="center">
+            <md-layout md-flex="35" md-flex-small="100" >
               <md-card style="margin:16px;">
                   <md-card-header>
-                      <div class="md-title">AMU AI Bot</div>
-                      <div class="md-subhead">AI bot to solve student queries</div>
+                    <div class="md-title">AMU AI Bot</div>
+                    <div class="md-subhead">AI bot to solve student queries</div>
                   </md-card-header>
 
                   <md-card-content>
@@ -35,12 +34,28 @@
                       <br><br>Fun Stuff <img style="height: 50px; padding: 5px;" src="https://emojipedia-us.s3.amazonaws.com/cache/0d/4a/0d4a6907a21382c60c80bf93c293926e.png"></img><br>ZHCET Students
                   </md-card-content>
                 </md-card>
-                <form id="form" v-on:submit.prevent="addQuery">
-                    <input type="text" v-model="newQuery.q" placeholder="Query">
-                    <input type="text" v-model="newQuery.a" placeholder="Answer">
-                    <input type="submit" value="Add User">
-                </form>
-          </md-layout>
+            </md-layout>
+            <md-card style="margin:16px;">
+                <md-card-header>
+                    <div class="md-title">Add Queries</div>
+                    <div class="md-subhead">Help us by adding queries to the database</div>
+                </md-card-header>
+                <md-card-content>
+                    <form id="form" v-on:submit.prevent="addQuery">
+                        <md-input-container>
+                            <label>Query</label>
+                            <md-input v-model="newQuery.q" type="text"></md-input>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Answer</label>
+                            <md-input v-model="newQuery.a" type="text"></md-input>
+                        </md-input-container>
+                        <md-layout md-align="end">
+                            <md-button type="submit" class="md-accent">Add User</md-button>
+                        </md-layout>
+                    </form>
+                </md-card-content>
+            </md-card>
         </md-layout>
 
         <md-dialog-alert
@@ -104,17 +119,6 @@
                     });
                     this.newQuery.q = '';
                     this.newQuery.a = '';
-                }
-            },
-            firebase: function() {
-                return {
-                    messageRef: {
-                      source: db.ref('ui/message'),
-                      asObject: true,
-                      readyCallback: function () {
-                        this.message = this.messageRef['.value'];
-                      }
-                    }
                 }
             }
         });
