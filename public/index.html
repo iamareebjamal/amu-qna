@@ -42,16 +42,20 @@
                 </md-card-header>
                 <md-card-content>
                     <form id="form" v-on:submit.prevent="addQuery">
-                        <md-input-container>
+                        <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.question }">
                             <label>Query</label>
                             <md-input v-model="newQuery.q" type="text"></md-input>
+
+                            <span class="md-error">Question cannot be empty</span>
                         </md-input-container>
-                        <md-input-container>
+                        <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.answer }">
                             <label>Answer</label>
-                            <md-input v-model="newQuery.a" type="text"></md-input>
+                            <md-textarea v-model="newQuery.a" type="text"></md-textarea>
+
+                            <span class="md-error">Answer cannot be empty</span>
                         </md-input-container>
                         <md-layout md-align="end">
-                            <md-button type="submit" class="md-accent">Add User</md-button>
+                            <md-button type="submit" class="md-accent" :disabled="!isValid">Add Query</md-button>
                         </md-layout>
                     </form>
                 </md-card-content>
@@ -83,13 +87,14 @@
         Vue.material.registerTheme('default', {
           primary: 'deep-orange',
           accent: 'purple',
-          warn: 'teal',
+          warn: 'red',
           background: 'white'
         });
 
         new Vue({
             el: '#app',
             data: {
+                started: false,
                 message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.',
                 newQuery : {
                     q: '',
@@ -100,11 +105,30 @@
                     ok: 'Cool!'
                 }
             },
+            computed: {
+                validation: function () {
+                  return {
+                    question: !!this.newQuery.q.trim(),
+                    answer: !!this.newQuery.a.trim()
+                  }
+                },
+                isValid: function () {
+                  var validation = this.validation
+                  return Object.keys(validation).every(function (key) {
+                    return validation[key]
+                  })
+                }
+              },
             methods: {
                 openDialog(ref) {
                     this.$refs[ref].open();
                 },
                 addQuery() {
+                    if (!this.isValid){
+                        this.started = true;
+                        return;
+                    }
+
                     const _vue = this;
 
                     queriesRef.push(this.newQuery, function(error) {
