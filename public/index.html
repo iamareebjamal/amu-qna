@@ -8,6 +8,7 @@
     <meta name=mobile-web-app-capable content=yes>
 
     <title>AMU QnA</title>
+    
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -68,6 +69,22 @@
                 </md-card>
             </md-layout>
         </md-layout>
+        <md-layout md-align="center" style="margin:16px;">
+        <md-layout md-flex="55" md-flex-medium="75" md-flex-xsmall="100" >
+        <md-card v-for="item in queries" style="margin: 10px;">
+        <md-card-content>
+            <div style="padding: 5px">
+                <i class="material-icons" style="margin-right: 5px; vertical-align: middle;">whatshot</i>
+                {{ item.q }}
+            </div>
+            <div style="padding: 5px">
+                <i class="material-icons" style="margin-right: 5px; vertical-align: middle;">done</i>
+                {{ item.a }}
+            </div>
+            </md-card-content>
+        </md-card>
+        </md-layout>
+        </md-layout>
 
         <md-dialog-alert
           :md-content="alert.content"
@@ -100,12 +117,16 @@
 
         new Vue({
             el: '#app',
+            firebase: {
+                queries: db.ref('queries').orderByChild('timestamp').limitToLast(25)
+            },
             data: {
                 started: false,
                 message: 'This site will soon serve as a survey site for registering content from various departments across AMU to make a machine learning data set which will be used to train an AI bot to solve queries.',
                 newQuery : {
                     q: '',
-                    a: ''
+                    a: '',
+                    timestamp: -Date.now()
                 },
                 alert: {
                     content: 'Your query has been added!',
@@ -144,12 +165,13 @@
 
                         if(error) {
                             _vue.alert.content = 'Error adding query. Service may be down!';
-                            _vue.alert.ok = 'Dang!'; 
+                            _vue.alert.ok = 'Dang!';
+                            _vue.openDialog('dialog-alert');
                         }
-                        _vue.openDialog('dialog-alert');
                     });
                     this.newQuery.q = '';
                     this.newQuery.a = '';
+                    this.newQuery.timestamp = - Date.now()
                 }
             }
         });
