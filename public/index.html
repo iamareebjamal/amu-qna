@@ -22,7 +22,7 @@
         </md-whiteframe>
 
         <md-layout md-align="center">
-            <md-layout md-flex="35" md-flex-small="100" >
+            <md-layout md-flex="35" md-flex-medium="60" md-flex-small="100" >
               <md-card style="margin:16px;">
                   <md-card-header>
                     <div class="md-title">AMU AI Bot</div>
@@ -35,31 +35,33 @@
                   </md-card-content>
                 </md-card>
             </md-layout>
-            <md-card style="margin:16px;">
-                <md-card-header>
-                    <div class="md-title">Add Queries</div>
-                    <div class="md-subhead">Help us by adding queries to the database</div>
-                </md-card-header>
-                <md-card-content>
-                    <form id="form" v-on:submit.prevent="addQuery">
-                        <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.question }">
-                            <label>Query</label>
-                            <md-input v-model="newQuery.q" type="text"></md-input>
+            <md-layout md-flex="20" md-flex-medium="40" md-flex-small="100" >
+                <md-card style="margin:16px;">
+                    <md-card-header>
+                        <div class="md-title">Add Queries</div>
+                        <div class="md-subhead">Help us by adding queries to the database before we add departmentalization features</div>
+                    </md-card-header>
+                    <md-card-content>
+                        <form id="form" v-on:submit.prevent="addQuery">
+                            <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.question }">
+                                <label>Query</label>
+                                <md-input v-model="newQuery.q" type="text"></md-input>
 
-                            <span class="md-error">Question cannot be empty</span>
-                        </md-input-container>
-                        <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.answer }">
-                            <label>Answer</label>
-                            <md-textarea v-model="newQuery.a" type="text"></md-textarea>
+                                <span class="md-error">Question cannot be empty</span>
+                            </md-input-container>
+                            <md-input-container v-bind:class="{ 'md-input-invalid': started && !validation.answer }">
+                                <label>Answer</label>
+                                <md-textarea v-model="newQuery.a" type="text"></md-textarea>
 
-                            <span class="md-error">Answer cannot be empty</span>
-                        </md-input-container>
-                        <md-layout md-align="end">
-                            <md-button type="submit" class="md-accent" :disabled="!isValid">Add Query</md-button>
-                        </md-layout>
-                    </form>
-                </md-card-content>
-            </md-card>
+                                <span class="md-error">Answer cannot be empty</span>
+                            </md-input-container>
+                            <md-layout md-align="end">
+                                <md-button type="submit" class="md-accent" :disabled="!isValid">Add Query</md-button>
+                            </md-layout>
+                        </form>
+                    </md-card-content>
+                </md-card>
+            </md-layout>
         </md-layout>
 
         <md-dialog-alert
