@@ -8,7 +8,7 @@
     <meta name=mobile-web-app-capable content=yes>
 
     <title>AMU QnA</title>
-    
+
     <link rel="icon" href="icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -91,7 +91,19 @@
           :md-ok-text="alert.ok"
           ref="dialog-alert">
         </md-dialog-alert>
+        <footer style="padding: 20px;background-color: #ddd;">
+            <md-layout md-align="center">
+                <a href="https://github.com/iamareebjamal">
+                    <span>Developers : Areeb Jamal (@iamareebjamal)</span>
+                    <i class="material-icons" style="margin-left: 10px; color: #555; vertical-align: middle;">face</i>
+                </a>
+                <a href="https://github.com/iamareebjamal/amu-qna">
+                    <i class="material-icons" style="margin-left: 10px; color: #555; vertical-align: middle;">cloud</i>
+                </a>
+            </md-layout>
+        </footer>
     </div>
+    
     <script type="text/javascript">
         var firebaseApp = firebase.initializeApp({
             apiKey: "AIzaSyDs9yK85MAqOxetbqUvbCEjUT9HNSQSGeU",
