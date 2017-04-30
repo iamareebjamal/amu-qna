@@ -2,6 +2,7 @@
   "rules": {
     ".read": "true",
     "queries": {
+      ".indexOn": "timestamp",
       "$query": {
         ".write": "true",
         ".validate": "newData.hasChildren(['q', 'a'])",
