@@ -21,7 +21,7 @@
   </head>
   <body>
     <div id="app">
-        <md-whiteframe>
+        <md-whiteframe md-tag="md-toolbar">
             <md-toolbar>
                 <h1 class="md-title">AMU QnA Survey</h1>
             </md-toolbar>
@@ -136,7 +136,7 @@
         new Vue({
             el: '#app',
             firebase: {
-                queries: db.ref('queries').orderByChild('timestamp').limitToLast(25)
+                queries: db.ref('queries').orderByChild('timestamp').limitToFirst(25)
             },
             data: {
                 started: false,
